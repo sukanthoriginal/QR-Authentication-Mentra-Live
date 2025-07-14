@@ -1,0 +1,13 @@
+Flask
+Flask-SocketIO
+python-dotenv
+supabase
+PyJWT
+requests
+eventlet
+gunicorn
+qrcode[pil]
+watchdog
+opencv-python
+pyzbar
+

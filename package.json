@@ -1,0 +1,29 @@
+{
+  "name": "mentraos-photo-taker-example-app",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "start": "bun run dist/index.js",
+    "dev": "bun --hot src/index.ts",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "Example app for taking photos with MentraOS",
+  "dependencies": {
+    "@mentra/sdk": "^2.1.2-alpha.1",
+    "dotenv": "^17.2.0",
+    "ejs": "^3.1.10",
+    "express": "^4.21.2",
+    "ws": "^8.18.1"
+  },
+  "devDependencies": {
+    "@types/ejs": "^3.1.5",
+    "@types/express": "^5.0.1",
+    "@types/node": "^24.0.13",
+    "@types/ws": "^8.18.0",
+    "tsx": "^4.20.3",
+    "typescript": "^5.8.3"
+  }
+}

@@ -1,0 +1,46 @@
+
+
+services:
+  glasses:
+    build: 
+      context: .
+      dockerfile: Dockerfile.glasses
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/app
+    
+
+  qrback:
+    build:
+      context: .
+      dockerfile: Dockerfile.qrback
+    ports:
+      - "96:96"
+    volumes:
+      - .:/app
+      - ./stream_data:/app/stream_data
+      - ./mentra.env:/app/mentra.env
+    environment:
+      - PYTHONUNBUFFERED=1
+      - WATCHDOG_FORCE_POLLING=true  # Add this line
+    restart: unless-stopped
+
+
+  externalweb:
+    build:
+      context: .
+      dockerfile: Dockerfile.externalweb  # ✅ Fixed: nested under `build`
+    ports:
+      - "98:98"
+    volumes:
+      - .:/app
+    env_file:
+      - mentra.env
+    restart: unless-stopped
+
+  cloudflared:
+    image: cloudflare/cloudflared:latest
+    command: tunnel --no-autoupdate run --token {cloudflare_token}
+    env_file:
+      - mentra.env

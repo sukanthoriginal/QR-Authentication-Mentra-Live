@@ -1,0 +1,23 @@
+.env
+node_modules/
+bun.lock
+.DS_Store
+*.log
+# VSCode
+.vscode/
+# Mac system files
+.DS_Store
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log* 
+
+mentra.env
+stream_data/
+.env
+mentra.env
+__pycache__/
+__pycache__/token_handler.cpython-312.pyc
+static/qrcodes
+
+mentra copy.env

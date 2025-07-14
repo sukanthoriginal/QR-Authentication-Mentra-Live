@@ -1,0 +1,43 @@
+# Use Python 3.9 slim base image
+FROM python:3.9-slim
+
+# Set working directory
+WORKDIR /app
+
+# Install system dependencies for OpenCV and image processing
+RUN apt-get update && apt-get install -y \
+    python3-opencv \
+    libgl1-mesa-glx \
+    libglib2.0-0 \
+    libsm6 \
+    libxext6 \
+    libxrender-dev \
+    libgomp1 \
+    libzbar0 \
+    && rm -rf /var/lib/apt/lists/*
+
+# Copy requirements file first (for better Docker layer caching)
+COPY requirements.txt .
+
+# Install Python dependencies
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copy application code
+COPY . .
+
+# Create stream_data directory with proper permissions
+RUN mkdir -p /app/stream_data && \
+    chmod 755 /app/stream_data
+
+# Set environment variable to force polling mode for watchdog
+ENV WATCHDOG_FORCE_POLLING=true
+
+# Expose port 96
+EXPOSE 96
+
+# Add healthcheck
+HEALTHCHECK --interval=30s --timeout=10s --start-period=10s --retries=3 \
+    CMD python -c "import requests; requests.get('http://localhost:96/status')" || exit 1
+
+# Run the application
+CMD ["python", "qr_glass.py"]
