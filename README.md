@@ -18,8 +18,6 @@ This is a multi-component QR code authentication system that allows users to aut
 
 ### 2. QR Glass Handler (`qr_glass.py`)
 **Purpose**: Processes camera frames from AR glasses to detect QR codes  
-- Monitors `stream_data/` folder for new image frames  
-- Auto-detects user ID from folder structure (`stream_data/<user_id>/`)  
 - Uses OpenCV and pyzbar for QR code detection  
 - Exchanges temporary tokens with AugmentOS API for user authentication  
 - Forwards successful authentications to desktop dashboard  
@@ -38,9 +36,9 @@ This is a multi-component QR code authentication system that allows users to aut
 ## Architecture Flow
 
 1. User opens web dashboard → QR code generated  
-2. User scans QR with AR glasses → Frame captured in `stream_data/`  
+2. User scans QR with AR glasses → Frame 
 3. QR detection system processes frame → Extracts QR data  
-4. System exchanges temp token → Gets user ID from AugmentOS  
+4. System exchanges temp token → Gets user ID from MentraOS  
 5. Secure JWT token generated → Sent to dashboard  
 6. Dashboard authenticates user → Redirects to dashboard  
 
@@ -51,7 +49,6 @@ This is a multi-component QR code authentication system that allows users to aut
 ### 🔐 Security
 - JWT tokens with 5-minute expiration  
 - Replay attack protection with unique token IDs  
-- Sanitized user IDs (replaces `@` and `.` with `_`)  
 - Secure session management  
 - Rate limiting protection  
 
@@ -62,7 +59,6 @@ This is a multi-component QR code authentication system that allows users to aut
 - Automatic cleanup of expired sessions/QR codes  
 
 ### 👥 Multi-user Support
-- User-specific folders in `stream_data/`  
 - Session isolation  
 - Concurrent user handling  
 
@@ -75,7 +71,7 @@ This is a multi-component QR code authentication system that allows users to aut
 - **QR Processing**: OpenCV, pyzbar, qrcode  
 - **Real-time**: WebSockets  
 - **Monitoring**: watchdog (file system events)  
-- **External API**: AugmentOS for user verification  
+- **External API**: MentraOS for user verification  
 
 ---
 
